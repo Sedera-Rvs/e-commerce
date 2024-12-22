@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="cart-container">
+  {% for order in orders %}
+    <div class="cart-item">
+      <img src="{{ order.product.thumbnail.url }}" alt="{{ order.product.name }}">
+      <div class="cart-item-info">
+        <h2 class="cart-item-title">{{ order.product.name }}</h2>
+        <p class="cart-quantity">Quantité : {{ order.quantity }}</p>
+      </div>
+    </div>
+  {% endfor %}
+
+  {% if orders %}
+    <a href="{% url 'delete-cart' %}" class="delete-cart-btn">
+      <i class="fas fa-trash"></i> Supprimer le panier
+    </a>
+  {% else %}
+    <p class="empty-cart-message">Votre panier est vide</p>
+  {% endif %}
+</div>
+{% endblock content %}

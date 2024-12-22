@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mon E-commerces{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <a href="{% url 'index' %}" class="brand-link">
+                <h1>Boutique de touse</h1>
+            </a>
+        </div>
+        
+        <div class="nav-links">
+            {% if not user.is_authenticated %}
+                <a href="{% url 'signup' %}" class="nav-link"><i class="fas fa-user-plus"></i> S'inscrire</a>
+                <a href="{% url 'login' %}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Se connecter</a>
+            {% else %}
+                <span class="welcome-text">Bienvenue {{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                {% if user.cart %}
+                    <a href="{% url 'cart' %}" class="cart-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">{{ user.cart.orders.count }}</span>
+                    </a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}
+        {% endblock content %}
+    </main>
+</body>
+</html>
